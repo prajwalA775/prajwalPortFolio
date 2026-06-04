@@ -1,21 +1,33 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Code } from 'lucide-react';
 
+const t = {
+  logoName: 'Prajwal',
+  logoSuffix: '.dev',
+  home: 'Home',
+  about: 'About',
+  skills: 'Skills',
+  projects: 'Projects',
+  achievements: 'Achievements',
+  education: 'Education',
+  contact: 'Contact'
+};
+
+const navItems = [
+  { name: t.home, href: '#home' },
+  { name: t.about, href: '#about' },
+  { name: t.skills, href: '#skills' },
+  { name: t.projects, href: '#projects' },
+  { name: t.achievements, href: '#achievements' },
+  { name: t.education, href: '#education' },
+  { name: t.contact, href: '#contact' },
+];
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
-
-  const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Achievements', href: '#achievements' },
-    { name: 'Education', href: '#education' },
-    { name: 'Contact', href: '#contact' },
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +63,17 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   return (
     <nav
@@ -117,7 +140,7 @@ export default function Navbar() {
           >
             <Code size={18} color="#fff" />
           </div>
-          <span>Prajwal<span className="text-gradient-primary">.dev</span></span>
+          <span>{t.logoName}<span className="text-gradient-primary">{t.logoSuffix}</span></span>
         </a>
 
         {/* Desktop Menu */}
@@ -194,53 +217,159 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer Overlay */}
       {isOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: scrolled ? '4.5rem' : '5.5rem',
-            left: 0,
-            width: '100vw',
-            height: 'calc(100vh - 4.5rem)',
-            background: 'rgba(3, 7, 18, 0.96)',
-            backdropFilter: 'blur(20px)',
-            zIndex: 40,
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '2rem 1.5rem',
-            borderTop: '1px solid var(--border-color)',
-            animation: 'fadeIn 0.25s ease-out',
-          }}
-        >
-          <ul
+        <>
+          {/* Backdrop Blur Overlay */}
+          <div
+            onClick={() => setIsOpen(false)}
             style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              background: 'rgba(3, 7, 18, 0.4)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 45,
+              animation: 'fadeInBackdrop 0.3s ease-out',
+            }}
+          />
+
+          {/* Drawer Panel */}
+          <div
+            className="drawer-gradient-bg"
+            style={{
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              width: 'min(300px, 80vw)',
+              height: '100vh',
+              backdropFilter: 'blur(24px)',
+              zIndex: 50,
               display: 'flex',
               flexDirection: 'column',
-              gap: '1.75rem',
-              listStyle: 'none',
+              padding: '2rem 1.5rem',
+              borderLeft: '1px solid var(--border-color)',
+              boxShadow: '-10px 0 30px rgba(0, 0, 0, 0.5)',
+              animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
+            {/* Subtle gradient glow blob inside drawer */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '15%',
+                right: '-50px',
+                width: '180px',
+                height: '180px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.1) 50%, transparent 100%)',
+                filter: 'blur(30px)',
+                pointerEvents: 'none',
+                zIndex: -1,
+              }}
+            />
+
+            {/* Drawer Header */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '2.5rem',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                paddingBottom: '1.25rem',
+              }}
+            >
+              {/* Logo copy inside drawer */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '1.1rem',
+                  fontFamily: 'var(--font-heading)',
+                  fontWeight: 800,
+                  color: '#fff',
+                }}
+              >
+                <div
                   style={{
-                    color: activeSection === item.href.slice(1) ? '#fff' : 'var(--text-secondary)',
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    fontSize: '1.25rem',
-                    display: 'block',
-                    transition: 'var(--transition-smooth)',
-                    borderLeft: activeSection === item.href.slice(1) ? '3px solid var(--color-primary)' : '3px solid transparent',
-                    paddingLeft: '1rem',
+                    padding: '0.3rem',
+                    borderRadius: '0.375rem',
+                    background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
-                  {item.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+                  <Code size={14} color="#fff" />
+                </div>
+                <span>{t.logoName}<span className="text-gradient-primary">{t.logoSuffix}</span></span>
+              </div>
+
+              {/* Close Button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="drawer-close-btn"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '50%',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer',
+                  width: '2.25rem',
+                  height: '2.25rem',
+                  transition: 'var(--transition-smooth)',
+                }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Nav List */}
+            <ul
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                listStyle: 'none',
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              {navItems.map((item) => {
+                const isActive = activeSection === item.href.slice(1);
+                return (
+                  <li key={item.name}>
+                    <a
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`drawer-link ${isActive ? 'active-drawer-link' : ''}`}
+                      style={{
+                        color: isActive ? '#fff' : 'var(--text-secondary)',
+                        textDecoration: 'none',
+                        fontWeight: 600,
+                        fontSize: '1.1rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        transition: 'var(--transition-smooth)',
+                        padding: '0.75rem 1rem',
+                        borderRadius: '8px',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </>
       )}
 
       {/* Inline styles to handle desktop-only media query visibility */}
@@ -259,9 +388,55 @@ export default function Navbar() {
             display: none !important;
           }
         }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInBackdrop {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        @keyframes drawerGradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .drawer-gradient-bg {
+          background: linear-gradient(135deg, rgba(3, 7, 18, 0.94), rgba(11, 17, 32, 0.94), rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+          background-size: 400% 400%;
+          animation: drawerGradient 15s ease infinite;
+        }
+        .drawer-link {
+          padding-left: 1rem !important;
+          background: transparent;
+        }
+        .drawer-link:hover {
+          color: #fff !important;
+          background: rgba(255, 255, 255, 0.03);
+          padding-left: 1.25rem !important;
+        }
+        .active-drawer-link {
+          color: #fff !important;
+          background: rgba(99, 102, 241, 0.06) !important;
+          padding-left: 1.25rem !important;
+          box-shadow: inset 8px 0 15px rgba(99, 102, 241, 0.05);
+        }
+        .active-drawer-link::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 15%;
+          bottom: 15%;
+          width: 4px;
+          border-radius: 9999px;
+          background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+          box-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-secondary);
+        }
+        .drawer-close-btn:hover {
+          color: #fff !important;
+          background: rgba(239, 68, 68, 0.1) !important;
+          border-color: rgba(239, 68, 68, 0.3) !important;
+          transform: rotate(90deg);
         }
       `}</style>
     </nav>

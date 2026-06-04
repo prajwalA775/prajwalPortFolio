@@ -1,29 +1,56 @@
 import { Award, GraduationCap, Code2, BrainCircuit } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
 
+const t = {
+  subtitle: 'Get To Know Me',
+  title: 'About Me',
+  engHeading: 'Engineering the Future with ',
+  engHighlight: 'Code & AI',
+  introParagraph1: 'I am a passionate and driven Computer Science Engineering student at ',
+  college: 'Nitte Meenakshi Institute of Technology',
+  introParagraph1End: '. My journey in tech is driven by an insatiable curiosity about how things work and a desire to build products that make a positive impact.',
+  introParagraph2: 'With a solid foundation in core programming paradigms like Object-Oriented Programming in Java and scripting in Python, combined with Data Structures and Algorithms in Java, I tackle complex challenges analytically. I am actively translating this technical depth into high-performance web applications and multi-modal AI intelligence tools.',
+  statusLabel: 'Current Status',
+  statusValue: 'B.E. CSE Student',
+  cgpaLabel: 'Academic CGPA',
+  cgpaValue: '8.97 / 10',
+  locationLabel: 'Location',
+  locationValue: 'Bangalore, India',
+  mindsetLabel: 'Mindset',
+  mindsetValue: 'Continuous Learner',
+  cardEducationTitle: 'Education',
+  cardEducationDesc: 'B.E. Computer Science Engineering student (2023 - 2027)',
+  cardScoreTitle: 'Academic Score',
+  cardScoreDesc: 'Outstanding academic standing with a CGPA of 8.97',
+  cardFoundationsTitle: 'Core Foundations',
+  cardFoundationsDesc: 'Strong grounding in Java, Python, Data Structures & Algorithms',
+  cardInterestsTitle: 'Key Interests',
+  cardInterestsDesc: 'Deep interest in Full-Stack Web Development, Artificial Intelligence & Machine Learning'
+};
+
 export default function About() {
   const reveal = useScrollReveal();
 
   const cards = [
     {
       icon: <GraduationCap size={24} className="text-gradient-primary" />,
-      title: 'Education',
-      desc: 'B.E. Computer Science Engineering student (2023 - 2027)',
+      title: t.cardEducationTitle,
+      desc: t.cardEducationDesc,
     },
     {
       icon: <Award size={24} className="text-gradient-primary" />,
-      title: 'Academic Score',
-      desc: 'Outstanding academic standing with a CGPA of 8.97',
+      title: t.cardScoreTitle,
+      desc: t.cardScoreDesc,
     },
     {
       icon: <Code2 size={24} className="text-gradient-primary" />,
-      title: 'Core Foundations',
-      desc: 'Strong grounding in Java, Python, Data Structures & Algorithms',
+      title: t.cardFoundationsTitle,
+      desc: t.cardFoundationsDesc,
     },
     {
       icon: <BrainCircuit size={24} className="text-gradient-primary" />,
-      title: 'Key Interests',
-      desc: 'Deep interest in Full-Stack Web Development, Artificial Intelligence & Machine Learning',
+      title: t.cardInterestsTitle,
+      desc: t.cardInterestsDesc,
     },
   ];
 
@@ -32,8 +59,8 @@ export default function About() {
       <div className="container">
         {/* Section Header */}
         <div className="section-title-wrapper reveal-hidden" ref={reveal}>
-          <p className="section-subtitle">Get To Know Me</p>
-          <h2 className="section-title">About Me</h2>
+          <p className="section-subtitle">{t.subtitle}</p>
+          <h2 className="section-title">{t.title}</h2>
           <div className="title-glow-line" />
         </div>
 
@@ -55,7 +82,7 @@ export default function About() {
                 fontFamily: 'var(--font-heading)',
               }}
             >
-              Engineering the Future with <span className="text-gradient-primary">Code & AI</span>
+              {t.engHeading}<span className="text-gradient-primary">{t.engHighlight}</span>
             </h3>
             <p
               style={{
@@ -64,10 +91,9 @@ export default function About() {
                 color: 'var(--text-secondary)',
               }}
             >
-              I am a passionate and driven Computer Science Engineering student at{' '}
-              <strong style={{ color: '#fff' }}>Nitte Meenakshi Institute of Technology</strong>.
-              My journey in tech is driven by an insatiable curiosity about how things work and a desire
-              to build products that make a positive impact.
+              {t.introParagraph1}
+              <strong style={{ color: '#fff' }}>{t.college}</strong>
+              {t.introParagraph1End}
             </p>
             <p
               style={{
@@ -76,10 +102,7 @@ export default function About() {
                 color: 'var(--text-secondary)',
               }}
             >
-              With a solid foundation in core programming paradigms like Object-Oriented Java and scripting
-              in Python, combined with Data Structures and Algorithms, I tackle complex challenges
-              analytically. I am actively translating this technical depth into high-performance web
-              applications and multi-modal AI intelligence tools.
+              {t.introParagraph2}
             </p>
             <div
               style={{
@@ -94,20 +117,20 @@ export default function About() {
               className="about-metrics"
             >
               <div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>Current Status</span>
-                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>B.E. CSE Student</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>{t.statusLabel}</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>{t.statusValue}</span>
               </div>
               <div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>Academic CGPA</span>
-                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-accent)' }}>8.97 / 10</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>{t.cgpaLabel}</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-accent)' }}>{t.cgpaValue}</span>
               </div>
               <div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>Location</span>
-                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Bangalore, India</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>{t.locationLabel}</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>{t.locationValue}</span>
               </div>
               <div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>Mindset</span>
-                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Continuous Learner</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block' }}>{t.mindsetLabel}</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>{t.mindsetValue}</span>
               </div>
             </div>
           </div>

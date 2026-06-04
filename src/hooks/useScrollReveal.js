@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export default function useScrollReveal() {
   const elementsRef = useRef([]);
+  const observerRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -20,22 +21,28 @@ export default function useScrollReveal() {
       }
     );
 
+    observerRef.current = observer;
+
     // Observe all registered elements
-    const currentElements = elementsRef.current;
-    currentElements.forEach((el) => {
+    elementsRef.current.forEach((el) => {
       if (el) observer.observe(el);
     });
 
     return () => {
-      currentElements.forEach((el) => {
-        if (el) observer.unobserve(el);
-      });
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+      observerRef.current = null;
     };
   }, []);
 
   const register = (el) => {
     if (el && !elementsRef.current.includes(el)) {
       elementsRef.current.push(el);
+      // Immediately observe dynamically registered element if observer is active
+      if (observerRef.current) {
+        observerRef.current.observe(el);
+      }
     }
   };
 
